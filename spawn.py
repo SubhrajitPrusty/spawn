@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 # alt + mouse drag
 
@@ -27,15 +28,19 @@ while not p.poll():
             ev = {
                     "device" : cs[cs.index("device")+1],
                     "detail" : cs[cs.index("detail")+1],
+                    # "window" : cs[cs.index("window")+1],
                     "root" : cs[cs.index("root")+1],
                 }
         except Exception as e:
+            # print(e)
             pass
 
         # print(ccparse)
+        
         if "motion" not in ccparse.lower() or "raw" not in ccparse.lower():
             if "press" in ccparse.lower() or "release" in ccparse.lower():
                 if ev['device'] == '10' or ev['device'] == '15':
+                    # if ev["window"] == "0x2e3":
                     event.append(ev)
                     # print(ccparse)
                     # print(ev)
@@ -52,7 +57,7 @@ while not p.poll():
                             size = (abs(m2[0]-m1[0]), abs(m2[1]-m1[1]))
                             print(size)
                             if min(size) > 100:
-                                os.
+                                os.system("setsid urxvt -name floating -geometry {}x{}".format(int(size[0]//10), int(size[1]//20)))
                             m1 = None
 
         cc = out 
